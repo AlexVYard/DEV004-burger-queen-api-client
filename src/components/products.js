@@ -29,40 +29,43 @@ function Products({ cart, addToCart }) {
   }, [navigate]);
   // console.log("results", results)
 
-  function addToCartButton(e) {
+  function addToCartButton(e, index) {
     // console.log("cart", cart)
     // console.log("e", e)
-
-    const cartbody = {
+    const cartBody = {
       "qty": 1,
       "product": e
     }
-
     // console.log(cartbody)
     // console.log(cart)
-    //if (cart.length > 0) {
+    // if (cart.length > 0) {
+    // let cartTemp = [] 
     for (const i in cart) {
       // console.log(cart[i]['product']['id'])
       // console.log(e['id'])
       if (cart[i]['product']['id'] === e['id']) {
-        cart[i]['qty'] += 1
-        console.log(cart)
+        
+        // console.log("cart[i]", cart[i])
+        let cartTemp = cart[i]
+        // console.log("cartTemp", cartTemp)
+        // console.log("cart", cart)
+        cartTemp['qty'] = cartTemp['qty'] + 1
+        // console.log("cartTemp", cartTemp)
+        // console.log(cart)
+        cart.splice(i, 1);
+        // console.log("cart", cart)
+        // addToCart([...cart])
+        addToCart([...cart, cartTemp])
         return
-      } /* else {
-          // console.log(cartbody)
-          // cart.push(cartbody)
-          addToCart([...cart, cartbody])
-          console.log(cart)
-          return
-        } */
+      }
     }
-    addToCart([...cart, cartbody])
+    // cart.splice(index, 1);
+    // addToCart([...cart])
+    addToCart([...cart, cartBody])
     /* } else {
       addToCart([...cart, cartbody])
     } */
-
    //  console.log(cart)
-
   }
 
   return (
@@ -79,7 +82,7 @@ function Products({ cart, addToCart }) {
             <p id={`counter${index}`}>{counter}</p> */}
 
               <button
-                onClick={() => { addToCartButton(e)/* ; console.log("cart", cart); console.log("e", e) */ }}
+                onClick={() => { addToCartButton(e, index)/* ; console.log("cart", cart); console.log("e", e) */ }}
                 className="checkoutBoxButtons"
               >Agregar al carrito</button>
 
