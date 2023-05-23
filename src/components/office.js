@@ -10,8 +10,8 @@ function Office() {
 
   let [results, setResults] = useState()
   // const [cart, addToCart] = useState([]);
-  const [userData, setUserData] = useState(true)
-  const [editUser, setEditUser] = useState(false)
+  // const [userData, setUserData] = useState({})
+  const [editUser, setEditUser] = useState({})
   const [addUserBox, setAddUserBox] = useState(true)
   const [addUserForm, setAddUserForm] = useState(false)
   const [email, setEmail] = useState('')
@@ -63,6 +63,17 @@ function Office() {
 
   } */
 
+const showEditUserForm = id => {
+  /* setUserData(prevShownComments => ({
+    ...prevShownComments,
+    [id]: !prevShownComments[id]
+  })) */
+  setEditUser(showEditForm => ({
+    ...showEditForm,
+    [id]: !showEditForm[id]
+  }))
+}
+
   async function deleteUser(id) {
     const result = await database(`users/${id}`, 'DELETE', localStorage.getItem("accessToken"))
     console.log(result)
@@ -75,14 +86,20 @@ function Office() {
       {results && results.map((e, index) => { // renders products
         return (
           // results && results.map((e, index) => (
-          <section className="officeBox">
+          <section className="officeBox" key={e.id}>
             {/* <img src={e['image']} alt={e['name']}></img> */}
-            {userData && <><p
+            {editUser[e.id] ? null : <><p
               id="textoCorreoInvalido"
               className="textoCorreoInvalido">
               Email: {e['email']}<br></br>
               Role: {e['role']}
             </p><br></br>
+
+              <button
+                onClick={() => { showEditUserForm(e.id)/* setEditUser(e.id); setUserData(e.id)  */}}
+                /* {...editUser === e ? true : false} */
+                className="checkoutBoxButtons"
+              >Editar datos</button><br></br>
 
               <button
                 onClick={() => { deleteUser(e.id) }}
@@ -93,11 +110,12 @@ function Office() {
             {/* <p id={index} onClick={() => { setCounter(counter - 1); console.log(index) }}>{'<'}</p>
             <p id={`counter${index}`}>{counter}</p> */}
 
-            {editUser && <><input
+            {editUser[e.id] ? <><input
               // data-testid="emailInput"
               type="text"
-              placeholder={`Email: ${e['email']}`}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder={'Nuevo email'}
+              defaultValue={e['email']}
+              onChange={(e) => setEmail(e.target.value)/*  onChange(e.target.value) */}
             ></input><br></br>
 
               {error && <p
@@ -116,7 +134,8 @@ function Office() {
               <input
                 // data-testid="passwordInput"
                 type="text"
-                placeholder={`Rol: ${e['role']}`}
+                placeholder={`Nuevo rol`}
+                defaultValue={e['role']}
                 onChange={(e) => setRole(e.target.value)}
               ></input><br></br>
 
@@ -126,9 +145,9 @@ function Office() {
               >Aceptar</button><br></br>
 
               <button
-                onClick={() => { setEditUser(false); setUserData(true) }}
+                onClick={() => { showEditUserForm(e.id)/* setEditUser(false); setUserData(true) */ }}
                 className="checkoutBoxButtons"
-              >Cancelar</button></>}
+              >Cancelar</button></> : null}
 
 
 
@@ -151,12 +170,12 @@ function Office() {
           <button
             onClick={() => { setAddUserForm(true); setAddUserBox(false) }}
             className="checkoutBoxButtons"
-          >Agregar trabajadores</button><br></br><br></br>
+          >Agregar trabajadores</button>{/* <br></br><br></br> */}
 
-          <button
+          {/* <button
             onClick={() => { setEditUser(true); setUserData(false) }}
             className="checkoutBoxButtons"
-          >Editar datos</button>
+          >Editar datos</button> */}
 
         </div>
       </section>}
