@@ -1,7 +1,7 @@
 import { render, screen/* , queryByAttribute */ } from '@testing-library/react';
 import React from 'react'
 // import userEvent from '@testing-library/user-event'
-import { fireEvent } from "@testing-library/react";
+import { fireEvent, waitFor } from "@testing-library/react";
 import '@testing-library/jest-dom'
 import { BrowserRouter/* , MemoryRouter *//* , Router */ } from "react-router-dom"
 // import { /* Link,  *//* Route, Routes, Router, */ useNavigate } from 'react-router-dom'
@@ -123,7 +123,7 @@ describe('Kitchen Order', () => {
 
     // navigate('/kitchen')
 
-    const notProcessedText1 = await screen.findAllByText(/not processed/i)
+    const notProcessedText1 = await screen.findAllByText(/Listo/i)
     // console.log("1", notProcessedText1.length)
 
     const orderReadyButton = await screen.findAllByText(/Listo/i)
@@ -133,8 +133,17 @@ describe('Kitchen Order', () => {
     // console.log((orderReadyButton[orderReadyButton.length - 1]))
 
     // render(<Kitchen />, { wrapper: BrowserRouter })
+    await expect(async () => {
+      await waitFor(
+          () => expect(notProcessedText2).toBe(notProcessedText1 - 1)
+      );
+    }).rejects.toEqual(expect.anything());
 
-    const notProcessedText2 = await screen.findAllByText(/not processed/i)
+    /* setTimeout(async () => {
+      await screen.findAllByText(/Listo/i)
+    }, 1000); */
+
+    const notProcessedText2 = await screen.findAllByText(/Listo/i)
     // console.log("2", notProcessedText2.length)
 
     expect(notProcessedText1.length > notProcessedText2.length).toBe(true)
@@ -148,19 +157,25 @@ describe('Kitchen Order', () => {
 
     // navigate('/kitchen')
 
-    const notDeliveredText1 = await screen.findAllByText(/not delivered/i)
-    // console.log("1", notProcessedText1.length)
+    const notDeliveredText1 = await screen.findAllByText(/Entregado/i)
+    console.log("1", notDeliveredText1.length)
 
     const orderDeliveredButton = await screen.findAllByText(/Entregado/i)
     fireEvent.click(orderDeliveredButton[orderDeliveredButton.length - 1])
+
+    await expect(async () => {
+      await waitFor(
+          () => expect(orderDeliveredButton).toBe(notDeliveredText1 - 1)
+      );
+    }).rejects.toEqual(expect.anything());
     // const button = screen.getByTestId(`buttonid1`)
     // fireEvent.click(button)
     // console.log((orderReadyButton[orderReadyButton.length - 1]))
 
     // render(<Kitchen />, { wrapper: BrowserRouter })
 
-    const notDeliveredText2 = await screen.findAllByText(/not delivered/i)
-    // console.log("2", notProcessedText2.length)
+    const notDeliveredText2 = await screen.findAllByText(/Entregado/i)
+    console.log("2", notDeliveredText2.length)
 
     expect(notDeliveredText1.length > notDeliveredText2.length).toBe(true)
   })

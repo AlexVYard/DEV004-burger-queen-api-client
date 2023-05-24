@@ -149,8 +149,6 @@ const showEditUserForm = id => {
                 className="checkoutBoxButtons"
               >Cancelar</button></> : null}
 
-
-
             {/* </div> */}
           </section>
         )

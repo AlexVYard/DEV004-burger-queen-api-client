@@ -56,15 +56,15 @@ function Kitchen() {
     // setResults(false)
     if (e['status'] === 'pending') {
       await database(`orders/${e.id}`, 'PATCH', localStorage.getItem("accessToken"), body1)
-      console.log("processed")
+      // console.log("processed")
     }
     if (e['status'] === 'processed') {
       await database(`orders/${e.id}`, 'PATCH', localStorage.getItem("accessToken"), body2)
-      console.log("delivered")
+      // console.log("delivered")
     }    
     results = await database('orders', 'GET', localStorage.getItem("accessToken"))    
     setResults(results)
-    // setResults(true)
+    return results
   }
 
   return (
@@ -110,10 +110,10 @@ function Kitchen() {
               {/* readyButton(e) */}
 
               <button
-                data-testid={`buttonid${e['id']}`}
+                // data-testid={`buttonid${e['id']}`}
                 // onload={readyButtonCall(e['status'])}
-                onClick={() => {
-                  updateDatabaseKitchen(e)
+                onClick={async () => {
+                  await updateDatabaseKitchen(e)
                   // database(`orders/${e.id}`, 'PATCH', localStorage.getItem("accessToken"), body)
                   // resultsFetch()
                   // Kitchen()
