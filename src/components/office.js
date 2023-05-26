@@ -166,9 +166,9 @@ function Office() {
 
               <select onChange={(e) => setRole(e.target.value)}>
                 <option value="" selected={true}>Selecciona una posición</option>
-                <option value="waiter">Mesero</option>
-                <option value="chef">Cocinero</option>
-                <option value="admin">Administrador</option>
+                <option data-testid="select-option" value="waiter">Mesero</option>
+                <option data-testid="select-option" value="chef">Cocinero</option>
+                <option data-testid="select-option" value="admin">Administrador</option>
               </select ><br></br>
 
               <button
@@ -238,11 +238,11 @@ function Office() {
           onChange={(e) => setRole(e.target.value)}
         ></input><br></br> */}
 
-        <select value={role} onChange={(e) => setRole(e.target.value)}>
+        <select data-testid="select" value={role} onChange={(e) => setRole(e.target.value)}>
           <option value="">Selecciona una posición</option>
-          <option value="waiter">Mesero</option>
-          <option value="chef ">Cocinero</option>
-          <option value="admin">Administrador</option>
+          <option data-testid="select-option" value="waiter">Mesero</option>
+          <option data-testid="select-option" value="chef ">Cocinero</option>
+          <option data-testid="select-option" value="admin">Administrador</option>
         </select ><br></br>
 
         {errorPosition && <p
