@@ -17,10 +17,17 @@ function Office() {
   const [email, setEmail] = useState('')
   const [error, setError] = useState(false)
   const [errorText, setErrorText] = useState("Error");
+  const [errorPosition, setErrorPosition] = useState(false)
+  const [errorPositionText, setErrorPositionText] = useState("Error");
   const [password, setPassword] = useState('')
   const [role, setRole] = useState('')
 
   const navigate = useNavigate();
+
+  async function reloadDatabase() {
+    results = await database('users', 'GET', localStorage.getItem("accessToken"))
+    setResults(results)
+  }
 
   useEffect(() => {  // getting info from database
     // fetch data
@@ -45,58 +52,76 @@ function Office() {
   }
 
   async function addUser() {
+    if (body["role"] === "") {
+      setErrorPosition(true)
+      setErrorPositionText('Selecciona una posición')
+      return 
+    } else {
+      setErrorPosition(false)
+    }
     const result = await database('users', 'POST', localStorage.getItem("accessToken"), body)
-    // console.log(result)
     if (typeof result === 'object') {
       // navigate('/menu')
       setAddUserForm(false)
       setAddUserBox(true)
     } else {
+      setError(true)
       setErrorText(result)
       // this.setState({ text: 'result' });
-    }
-    results = await database('users', 'GET', localStorage.getItem("accessToken"))
-    setResults(results)
+    }     
+    // console.log(result)    
+    reloadDatabase()
   }
 
-  /* function cancel() {
+  const showEditUserForm = id => {
+    /* setUserData(prevShownComments => ({
+      ...prevShownComments,
+      [id]: !prevShownComments[id]
+    })) */
+    setEditUser(showEditForm => ({
+      ...showEditForm,
+      [id]: !showEditForm[id]
+    }))
+  }
 
-  } */
-
-const showEditUserForm = id => {
-  /* setUserData(prevShownComments => ({
-    ...prevShownComments,
-    [id]: !prevShownComments[id]
-  })) */
-  setEditUser(showEditForm => ({
-    ...showEditForm,
-    [id]: !showEditForm[id]
-  }))
-}
+  async function acceptEditUser(id) {
+    await database(`users/${id}`, 'PATCH', localStorage.getItem("accessToken"), body)
+    showEditUserForm(id)
+    reloadDatabase()
+  }
 
   async function deleteUser(id) {
     const result = await database(`users/${id}`, 'DELETE', localStorage.getItem("accessToken"))
     console.log(result)
-    results = await database('users', 'GET', localStorage.getItem("accessToken"))
-    setResults(results)
+    reloadDatabase()
   }
 
   return (
     <main className="officeScreen">
       {results && results.map((e, index) => { // renders products
+      const roleValue = () => {
+        if (e['role'] === 'waiter') return 'Mesero'
+        if (e['role'] === 'chef') return 'Cocinero'
+        if (e['role'] === 'admin') return 'Administrador'
+      }
+      const selectedRole = () => {
+        if (e['role'] === 'waiter') {return true }
+        if (e['role'] === 'chef') return true
+        if (e['role'] === 'admin') return true
+      }
         return (
           // results && results.map((e, index) => (
           <section className="officeBox" key={e.id}>
-            {/* <img src={e['image']} alt={e['name']}></img> */}
+
             {editUser[e.id] ? null : <><p
               id="textoCorreoInvalido"
               className="textoCorreoInvalido">
               Email: {e['email']}<br></br>
-              Role: {e['role']}
+              Role: {roleValue()}
             </p><br></br>
 
               <button
-                onClick={() => { showEditUserForm(e.id)/* setEditUser(e.id); setUserData(e.id)  */}}
+                onClick={() => { showEditUserForm(e.id)/* setEditUser(e.id); setUserData(e.id)  */ }}
                 /* {...editUser === e ? true : false} */
                 className="checkoutBoxButtons"
               >Editar datos</button><br></br>
@@ -118,11 +143,11 @@ const showEditUserForm = id => {
               onChange={(e) => setEmail(e.target.value)/*  onChange(e.target.value) */}
             ></input><br></br>
 
-              {error && <p
+              {/* {error && <p
                 id="textoCorreoInvalido"
                 className="textoCorreoInvalido"
                 style={{ visibility: error ? 'visible' : 'hidden' }}
-              >{errorText}<br></br></p>}
+              >{errorText}<br></br><br></br></p>} */}
 
               <input
                 // data-testid="passwordInput"
@@ -131,16 +156,23 @@ const showEditUserForm = id => {
                 onChange={(e) => setPassword(e.target.value)}
               ></input><br></br>
 
-              <input
+              {/* <input
                 // data-testid="passwordInput"
                 type="text"
                 placeholder={`Nuevo rol`}
                 defaultValue={e['role']}
                 onChange={(e) => setRole(e.target.value)}
-              ></input><br></br>
+              ></input><br></br> */}
+
+              <select onChange={(e) => setRole(e.target.value)}>
+                <option value="" selected={true}>Selecciona una posición</option>
+                <option value="waiter">Mesero</option>
+                <option value="chef">Cocinero</option>
+                <option value="admin">Administrador</option>
+              </select ><br></br>
 
               <button
-                onClick={() => { }}
+                onClick={() => { acceptEditUser(e.id); setEmail(e['email'])/* database(`users/${e.id}`, 'PATCH', localStorage.getItem("accessToken"), body) *//* ; setError(true) */ }}
                 className="checkoutBoxButtons"
               >Aceptar</button><br></br>
 
@@ -190,7 +222,7 @@ const showEditUserForm = id => {
           id="textoCorreoInvalido"
           className="textoCorreoInvalido"
           style={{ visibility: error ? 'visible' : 'hidden' }}
-        >{errorText}<br></br></p>}
+        >{errorText}<br></br><br></br></p>}
 
         <input
           // data-testid="passwordInput"
@@ -199,16 +231,29 @@ const showEditUserForm = id => {
           onChange={(e) => setPassword(e.target.value)}
         ></input><br></br>
 
-        <input
+        {/* <input
           // data-testid="passwordInput"
           type="text"
           placeholder="Rol"
           onChange={(e) => setRole(e.target.value)}
-        ></input><br></br>
+        ></input><br></br> */}
+
+        <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <option value="">Selecciona una posición</option>
+          <option value="waiter">Mesero</option>
+          <option value="chef ">Cocinero</option>
+          <option value="admin">Administrador</option>
+        </select ><br></br>
+
+        {errorPosition && <p
+          id="textoCorreoInvalido"
+          className="textoCorreoInvalido"
+          style={{ visibility: errorPosition ? 'visible' : 'hidden' }}
+        >{errorPositionText}<br></br><br></br></p>}
 
         <button
           // data-testid="signInButton"
-          onClick={() => { setError(true); setErrorText(); addUser() }}
+          onClick={() => { addUser() }}
           className="checkoutBoxButtons"
         >Crear usuario</button><br></br>
 

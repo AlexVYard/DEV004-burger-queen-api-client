@@ -9,6 +9,7 @@ import { BrowserRouter/* , MemoryRouter *//* , Router */ } from "react-router-do
 // import Login from './components/login.js';
 import App from './App.js';
 import Kitchen from './components/kitchen.js';
+import Office from './components/office.js';
 // import { signIn } from './scripts/signIn';
 // import { postOrder } from './scripts/postOrder.js';
 // import { database } from './scripts/database.js';
@@ -178,5 +179,48 @@ describe('Kitchen Order', () => {
     console.log("2", notDeliveredText2.length)
 
     expect(notDeliveredText1.length > notDeliveredText2.length).toBe(true)
+  })
+
+  describe.only('Office', () => {
+    test('Add worker', async () => {
+      render(<Office />, { wrapper: BrowserRouter })
+      // const user = userEvent.setup()
+  
+      // const navigate = useNavigate();
+  
+      // navigate('/kitchen')
+  
+      /* const notDeliveredText1 = await screen.findAllByText(/Entregado/i)
+      console.log("1", notDeliveredText1.length) */
+  
+      const addWorkersButton = await screen.findByText(/Agregar trabajadores/i)
+      fireEvent.click(addWorkersButton)
+  
+      /* await expect(async () => {
+        await waitFor(
+            () => expect(orderDeliveredButton).toBe(notDeliveredText1 - 1)
+        );
+      }).rejects.toEqual(expect.anything()); */
+      const emailInput = screen.getByPlaceholderText(/E-mail/i)
+      const passwordInput = screen.getByPlaceholderText(/Contraseña/i)
+      const roleInput = screen.getByPlaceholderText(/Rol/i)
+      fireEvent.change(emailInput, { target: { value: 'hello@goodbye.com' }})
+      fireEvent.change(emailInput, { target: { value: 'hello@goodbye.com' }})
+      fireEvent.change(emailInput, { target: { value: 'hello@goodbye.com' }})
+      /* console.log(emailInput)
+      console.log(passwordInput)
+      console.log(roleInput) */
+      console.log(emailInput)
+
+      // fireEvent.click(button)
+      // console.log((orderReadyButton[orderReadyButton.length - 1]))
+  
+      // render(<Kitchen />, { wrapper: BrowserRouter })
+  
+      /* const notDeliveredText2 = await screen.findAllByText(/Entregado/i)
+      console.log("2", notDeliveredText2.length)
+  
+      expect(notDeliveredText1.length > notDeliveredText2.length).toBe(true) */
+    })
   })
 })
