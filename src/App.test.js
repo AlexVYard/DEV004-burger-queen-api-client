@@ -206,8 +206,48 @@ describe('Office', () => {
     fireEvent.click(createWorkerButton)
     
     await expect(async () => {
+      await screen.findByText(/Email: hello@goodbye.com/i).toBeInTheDocument()
+    }).rejects.toEqual(expect.anything());
+
+    // const addWorkersButton2 = await screen.findByText(/Agregar trabajadores/i)
+    // console.log(addWorkersButton2)
+
+    // fireEvent.click(button)
+    // console.log((orderReadyButton[orderReadyButton.length - 1]))
+
+    // render(<Kitchen />, { wrapper: BrowserRouter })
+
+    /* const notDeliveredText2 = await screen.findAllByText(/Entregado/i)
+    console.log("2", notDeliveredText2.length) */
+
+    // expect(screen.getByText(/Email: hello@goodbye.com/i)).toBeInTheDocument()
+  })
+
+  test('Edit worker', async () => {
+    render(<Office />, { wrapper: BrowserRouter })
+
+    const editWorkerButtons = await screen.findAllByText(/Editar datos/i)
+    fireEvent.click(editWorkerButtons[editWorkerButtons.length - 1])
+
+    const emailInput = screen.getByPlaceholderText(/E-mail/i)
+    const passwordInput = screen.getByPlaceholderText(/Contraseña/i)
+    const roleInput = screen.getByTestId('select')
+    
+    fireEvent.change(emailInput, { target: { value: 'goodbye@hello.com' } })
+    fireEvent.change(passwordInput, { target: { value: '12345678' } })
+    fireEvent.change(roleInput, { target: { value: 'waiter' } })
+
+    let options = screen.getAllByTestId('select-option')
+    expect(options[0].selected).toBeTruthy();
+    expect(options[1].selected).toBeFalsy();
+    expect(options[2].selected).toBeFalsy();
+
+    const acceptEditButton = await screen.findByText(/Aceptar/i)
+    fireEvent.click(acceptEditButton)
+    
+    await expect(async () => {
       await waitFor(
-        async () => expect(await screen.findByText(/Agregar trabajadores/i)).toBeInTheDocument()
+        async () => expect(editWorkerButtons).toBeInTheDocument()
       );
     }).rejects.toEqual(expect.anything());
 
@@ -222,6 +262,6 @@ describe('Office', () => {
     /* const notDeliveredText2 = await screen.findAllByText(/Entregado/i)
     console.log("2", notDeliveredText2.length) */
 
-    expect(screen.getByText(/Email: hello@goodbye.com/i)).toBeInTheDocument()
+    expect(screen.getByText(/Email: goodbye@hello.com/i)).toBeInTheDocument()
   })
 })

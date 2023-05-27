@@ -104,11 +104,11 @@ function Office() {
         if (e['role'] === 'chef') return 'Cocinero'
         if (e['role'] === 'admin') return 'Administrador'
       }
-      const selectedRole = () => {
+      /* const selectedRole = () => {
         if (e['role'] === 'waiter') {return true }
         if (e['role'] === 'chef') return true
         if (e['role'] === 'admin') return true
-      }
+      } */
         return (
           // results && results.map((e, index) => (
           <section className="officeBox" key={e.id}>
@@ -164,7 +164,7 @@ function Office() {
                 onChange={(e) => setRole(e.target.value)}
               ></input><br></br> */}
 
-              <select onChange={(e) => setRole(e.target.value)}>
+              <select data-testid="select" onChange={(e) => setRole(e.target.value)}>
                 <option value="" selected={true}>Selecciona una posición</option>
                 <option data-testid="select-option" value="waiter">Mesero</option>
                 <option data-testid="select-option" value="chef">Cocinero</option>
@@ -238,8 +238,8 @@ function Office() {
           onChange={(e) => setRole(e.target.value)}
         ></input><br></br> */}
 
-        <select data-testid="select" value={role} onChange={(e) => setRole(e.target.value)}>
-          <option value="">Selecciona una posición</option>
+        <select data-testid="select" /* value={role} */ onChange={(e) => setRole(e.target.value)}>
+          <option value="" selected={true}>Selecciona una posición</option>
           <option data-testid="select-option" value="waiter">Mesero</option>
           <option data-testid="select-option" value="chef ">Cocinero</option>
           <option data-testid="select-option" value="admin">Administrador</option>
