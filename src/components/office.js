@@ -91,8 +91,8 @@ function Office() {
   }
 
   async function deleteUser(id) {
-    const result = await database(`users/${id}`, 'DELETE', localStorage.getItem("accessToken"))
-    console.log(result)
+    /* const result =  */await database(`users/${id}`, 'DELETE', localStorage.getItem("accessToken"))
+    // console.log(result)
     reloadDatabase()
   }
 

@@ -52,35 +52,6 @@ describe('Login', () => {
 
 describe('Post Order', () => {
   test('Error', async () => {
-    /* const email = "grace.hopper@systers.xyz"
-    const password = "123456"
-    const body1 = { email, password }
-    const result1 = await database('login', 'POST', null, body1)
-    // console.log(result)
-    const body2 = {
-      "client": "UNIT TEST",
-      "products": [
-        [
-          {
-            "id": 2,
-            "name": "Café americano",
-            "price": 500,
-            "image": "https://raw.githubusercontent.com/ssinuco/burger-queen-api-mock/main/resources/images/coffee.png",
-            "type": "Desayuno",
-            "dateEntry": "2022-03-05 15:14:10"
-          }
-        ]
-      ],
-      "status": "pending",
-      "dataEntry": new Date().toLocaleString()
-    }
-    // console.log(result['accessToken'])
-    // console.log(localStorage.getItem("accessToken"))
-    const accessToken = result1['accessToken']
-    const result2 = await database('orders', 'POST', accessToken, body2)
-    // console.log(result)
-    // Object.keys(exampleObject).length
-    expect(Object.keys(result2).length).toBe(5) */
     render(<App />, { wrapper: BrowserRouter })
 
     const button = screen.getByText(/Enviar a cocina/i)
@@ -235,5 +206,28 @@ describe('Office', () => {
     await expect(async () => {
       await screen.findByText(/Email: goodbye@hello.com/i).toBeInTheDocument()
     }).rejects.toEqual(expect.anything());
+  })
+
+  test('Delete worker', async () => {
+    render(<Office />, { wrapper: BrowserRouter })
+
+    const deleteWorkerButtons1 = await screen.findAllByText(/Eliminar usuario/i)
+    fireEvent.click(deleteWorkerButtons1[deleteWorkerButtons1.length - 1])
+    // console.log(deleteWorkerButtons1.length)
+
+    await expect(async () => {
+      await waitFor(
+        () => expect(deleteWorkerButtons1.length).toBe(deleteWorkerButtons1.length - 1)
+      );
+    }).rejects.toEqual(expect.anything());
+
+    /* await expect(async () => {
+      await deleteWorkerButtons1.length.toBe(deleteWorkerButtons1.length - 1)
+    }).rejects.toEqual(expect.anything()); */
+
+    const deleteWorkerButtons2 = await screen.findAllByText(/Eliminar usuario/i)
+    // console.log(deleteWorkerButtons2.length)
+
+    expect(deleteWorkerButtons1.length > deleteWorkerButtons2.length).toBe(true)
   })
 })
