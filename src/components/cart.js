@@ -6,7 +6,7 @@ import { database } from '../scripts/database';
 // import { getElementError } from '@testing-library/react'
 // import ReactDOM from "react-dom"
 
-function Cart({ cart, addToCart }/* { menuToProducts } */) {
+function Cart({ cart, addToCart, results, setResults }/* { menuToProducts } */) {
 
   const [client, setClient] = useState('')
   // const [clientText, setClientText] = useState('')
@@ -49,9 +49,12 @@ function Cart({ cart, addToCart }/* { menuToProducts } */) {
       setErrorCart(false)
       setSuccessfulOrder(true)
       // setSuccessfulOrderText('Enviado a Cocina')
-      setTimeout(() => {
+      setTimeout(async () => {
         // navigate('/menu')
-        window.location.reload(false)
+
+        results = await database('users', 'GET', localStorage.getItem("accessToken"))
+        setResults(results)
+
       }, "3000");
       // alert('Enviado a la cocina')
     }
@@ -116,7 +119,7 @@ function Cart({ cart, addToCart }/* { menuToProducts } */) {
                       addToCart([...cart, itemTemp])
                       console.log(item)
                     }}>+</h4>
-                    
+
                 </section>
                 <p>Precio: {item.product.price * item.qty}</p>
                 <button

@@ -6,13 +6,14 @@ import Cart from './cart';
 
 function Menu() {
 
+  const [results, setResults] = useState()
   const [cart, addToCart] = useState([])
 
   return (
     <main className="PantallaInicio">
 
-      <Products cart={cart} addToCart={addToCart}/* menuToProducts={results}  */ />
-      <Cart cart={cart} addToCart={addToCart} />
+      <Products results={results} setResults={setResults} cart={cart} addToCart={addToCart}/* menuToProducts={results}  */ />
+      <Cart  results={results} setResults={setResults} cart={cart} addToCart={addToCart} />
 
     </main>
   )

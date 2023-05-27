@@ -74,7 +74,7 @@ function Kitchen() {
         // console.log(e.id)
         return (
           // results && results.map((e, index) => (
-          <section key={e['id']}  className="cartBox">
+          <section /* key={`kitchenScreenSection${e['id']}`} */  className="cartBox">
 
             {e['products'].map((products, index) => {
 

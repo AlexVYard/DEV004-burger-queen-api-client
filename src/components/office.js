@@ -164,8 +164,8 @@ function Office() {
                 onChange={(e) => setRole(e.target.value)}
               ></input><br></br> */}
 
-              <select data-testid="select" onChange={(e) => setRole(e.target.value)}>
-                <option value="" selected={true}>Selecciona una posición</option>
+              <select data-testid="select" defaultValue="" onChange={(e) => setRole(e.target.value)}>
+                <option value="">Selecciona una posición</option>
                 <option data-testid="select-option" value="waiter">Mesero</option>
                 <option data-testid="select-option" value="chef">Cocinero</option>
                 <option data-testid="select-option" value="admin">Administrador</option>
@@ -238,8 +238,8 @@ function Office() {
           onChange={(e) => setRole(e.target.value)}
         ></input><br></br> */}
 
-        <select data-testid="select" /* value={role} */ onChange={(e) => setRole(e.target.value)}>
-          <option value="" selected={true}>Selecciona una posición</option>
+        <select data-testid="select" defaultValue="" /* value={role} */ onChange={(e) => setRole(e.target.value)}>
+          <option value="">Selecciona una posición</option>
           <option data-testid="select-option" value="waiter">Mesero</option>
           <option data-testid="select-option" value="chef ">Cocinero</option>
           <option data-testid="select-option" value="admin">Administrador</option>

@@ -6,9 +6,9 @@ import { database } from '../scripts/database';
 // import { getElementError } from '@testing-library/react'
 // import ReactDOM from "react-dom"
 
-function Products({ cart, addToCart }) {
+function Products({ cart, addToCart, results, setResults }) {
 
-  const [results, setResults] = useState()
+  // const [results, setResults] = useState()
   // const [cart, addToCart] = useState([]);
 
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ function Products({ cart, addToCart }) {
     }
     resultsFetch()
     // console.log("results", results)
-  }, [navigate]);
+  }, [navigate, setResults]);
   // console.log("results", results)
 
   function addToCartButton(e, index) {
