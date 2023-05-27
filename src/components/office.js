@@ -1,5 +1,6 @@
 // import React, { useState, useEffect } from 'react'
-// import { /* Navigate,  */useNavigate } from "react-router-dom"
+// import { Link, useMatch, useResolvedPath } from "react-router-dom"
+import Header from './header';
 import './styles.css';
 // import { signIn } from '../scripts/signIn';
 // import { database } from '../scripts/database';
@@ -10,11 +11,14 @@ import Workers from './workers';
 function Office() {
 
   return (
-    <main className="officeScreen">
+    <>
+      <Header />
+      <main className="officeScreen">
 
-      <Workers />
+        <Workers />
 
-    </main>
+      </main>
+    </>
   )
 }
 

@@ -6,92 +6,54 @@
   box-sizing: border-box;
 }
 
-body {
+body, #root {
   height: 100vh;
-
 }
 
-#root {
+.PantallaInicio, .kitchenScreen, .officeScreen {
   height: 100%;
+  font-family: 'Verdana', sans-serif;
+  background-size: cover;
 }
 
 .PantallaInicio {
-  height: 100%;
-  /*  background-color: #d49f18; */
   background-image: url("./img/img_fondo.png");
   display: flex;
   align-items: center;
-  font-family: 'Verdana', sans-serif;
-  background-size: cover;
-  /* background-position-x: center; */
 }
 
-.kitchenScreen {
-  height: 100%;
-  /*  background-color: #d49f18; */
+.kitchenScreen, .officeScreen  {
   background-image: url("./img/img_kitchenScreen.jpg");
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
-  font-family: 'Verdana', sans-serif;
-  background-size: cover;
-  /* background-position-x: center; */
+}
+
+.kitchenScreen {
+  background-image: url("./img/img_kitchenScreen.jpg");
+
 }
 
 .officeScreen {
-  height: 100%;
-  /*  background-color: #d49f18; */
   background-image: url("./img/img_officeScreen.jpg");
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+}
+
+.cajaInicio, .cartBox, .officeBox {
+  padding: 20px 50px;
+  width: auto;
+  display: grid;  
+  margin: 0px auto;
   align-items: center;
-  font-family: 'Verdana', sans-serif;
-  background-size: cover;
-  /* background-position-x: center; */
+  justify-items: center;
+  background-color: white;
+  border-radius: 15px;
+  height: auto;
 }
 
 .cajaInicio {
-  padding: 20px 50px;
   width: 280px;
-  display: flex;
   flex-direction: column;
-  margin: 0px auto;
-  align-items: center;
   justify-content: space-around;
-  background-color: white;
-  border-radius: 15px;
-  height: 300px;
-}
-
-.cartBox {
-  padding: 20px 50px;
-  width: auto;
-  display: grid;  
-  /* flex-direction: row; */
-  margin: 0px auto;
-  align-items: center;
-  justify-items: center;
-  background-color: white;
-  border-radius: 15px;
-  height: auto;
-}
-
-.officeBox {
-  padding: 20px 50px;
-  width: auto;
-  display: grid;  
-  /* flex-direction: row; */
-  margin: 0px auto;
-  align-items: center;
-  justify-items: center;
-  background-color: white;
-  border-radius: 15px;
-  height: auto;
-}
-
-.quantitybuttons {
-  display: flex;
-  flex-direction: row;
 }
 
 .cajaInicio>img {
@@ -102,15 +64,6 @@ body {
   width: 100%;
 }
 
-/* .botonInicio{
-  width: 144px;
-  background-color: #4D94FF;
-  color: white;
-  border: 0px;
-  border-radius: 15px;
-  height: 45px;
-} */
-
 button {
   width: 144px;
   background-color: #4D94FF;
@@ -120,33 +73,39 @@ button {
   height: 45px;
 }
 
-.cajaInicio>input{
+.quantitybuttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.cajaInicio>input {
   width: 100%;
 }
 
-.cajaInicio>a{
+.cajaInicio>a {
   text-decoration: none;
 }
 
-.textoCrearCuenta {
+.textoCrearCuenta, .textoCorreoInvalido {
   font-size: 10px;
 }
 
 .textoCorreoInvalido {
-  /* visibility: hidden; */
-  font-size: 10px;
   color: #D80000;
-  /* margin-top: -15px;
-  margin-bottom: -12px; */
 }
 
 input {
-  /* width: 144px; */
   height: 44px;
-  /* margin: 5px; */
   padding: 10px;
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;
   background-color: #f8f8f8;
+}
+
+.header {
+display: flex;
+list-style: none;
+gap: 1rem;
+padding: 5px 1rem
 }

@@ -74,9 +74,9 @@ function Products({ cart, addToCart, results, setResults }) {
         return (
           // results && results.map((e, index) => (
           <section className="cajaInicio">
-            <img src={e['image']} alt={e['name']}></img>
-            <p id="textoCorreoInvalido" className="textoCorreoInvalido">{e['name']}</p>
-            <p id="textoCorreoInvalido" className="textoCorreoInvalido">Precio: {e['price']}</p>
+            <img src={e['image']} alt={e['name']}></img><br></br>
+            <p id="textoCorreoInvalido" className="textoCorreoInvalido">{e['name']}</p><br></br>
+            <p id="textoCorreoInvalido" className="textoCorreoInvalido">Precio: {e['price']}</p><br></br>
             <div className="amountBox">
               {/* <p id={index} onClick={() => { setCounter(counter - 1); console.log(index) }}>{'<'}</p>
             <p id={`counter${index}`}>{counter}</p> */}
