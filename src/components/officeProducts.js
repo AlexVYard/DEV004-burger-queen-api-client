@@ -6,6 +6,8 @@ import Header from './officeHeader';
 
 function OfficeProducts() {
 
+  const [editProduct, setEditProduct] = useState({})
+
   const [addProductBox, setAddProductBox] = useState(true)
   const [addProductForm, setAddProductForm] = useState(false)
   const [name, setName] = useState('')
@@ -40,6 +42,35 @@ function OfficeProducts() {
   }, [navigate, setResults]);
   // console.log("results", results)
 
+  const showEditProductForm = id => {
+    /* setUserData(prevShownComments => ({
+      ...prevShownComments,
+      [id]: !prevShownComments[id]
+    })) */
+    setEditProduct(showEditForm => ({
+      ...showEditForm,
+      [id]: !showEditForm[id]
+    }))
+  }
+
+  async function acceptEditProduct(e) {
+    if (name === "") {
+      setName(e.name)
+    }
+    if (price === "") {
+      setPrice(e.price)
+    }
+    if (image === "") {
+      setImage(e.image)
+    }
+    if (type === "") {
+      setType(e.type)
+    }
+    await database(`products/${e.id}`, 'PATCH', localStorage.getItem("accessToken"), body)
+    showEditProductForm(e.id)
+    reloadDatabase()
+  }
+
   async function deleteProduct(id) {
     /* const result =  */await database(`products/${id}`, 'DELETE', localStorage.getItem("accessToken"))
     // console.log(result)
@@ -54,7 +85,7 @@ function OfficeProducts() {
   }
 
   async function addProduct() {
-    if (name===""||price===""||image===""||type==="") {
+    if (name === "" || price === "" || image === "" || type === "") {
       setError(true)
       setErrorText("Por favor rellene todos los campos")
       return
@@ -87,33 +118,87 @@ function OfficeProducts() {
       <Header />
       <main className="officeScreen">
         {results && results.map((e, index) => { // renders products
-        /* const typeValue = () => {
-          if (e['type'] === 'Desayuno') return 'Mesero'
-          if (e['type'] === 'Almuerzo') return 'Cocinero'
-        } */
+          /* const typeValue = () => {
+            if (e['type'] === 'Desayuno') return 'Mesero'
+            if (e['type'] === 'Almuerzo') return 'Cocinero'
+          } */
           return (
             // results && results.map((e, index) => (
             <section className="cajaInicio">
-              <p id="textoCorreoInvalido" className="textoCorreoInvalido">Imagen:</p>
-              <img src={e['image']} alt={e['name']}></img><br></br>
-              <p id="textoCorreoInvalido" className="textoCorreoInvalido">Nombre: {e['name']}</p><br></br>
-              <p id="textoCorreoInvalido" className="textoCorreoInvalido">Precio: {e['price']}</p><br></br>
-              <p id="textoCorreoInvalido" className="textoCorreoInvalido">Tipo: {e['type']}</p><br></br>
-              <div className="amountBox">
-                {/* <p id={index} onClick={() => { setCounter(counter - 1); console.log(index) }}>{'<'}</p>
+              {editProduct[e.id] ? null : <><p id="textoCorreoInvalido" className="textoCorreoInvalido">Imagen:</p>
+                <img src={e['image']} alt={e['name']}></img><br></br>
+                <p id="textoCorreoInvalido" className="textoCorreoInvalido">Nombre: {e['name']}</p><br></br>
+                <p id="textoCorreoInvalido" className="textoCorreoInvalido">Precio: {e['price']}</p><br></br>
+                <p id="textoCorreoInvalido" className="textoCorreoInvalido">Tipo: {e['type']}</p><br></br>
+                <div className="amountBox">
+                  {/* <p id={index} onClick={() => { setCounter(counter - 1); console.log(index) }}>{'<'}</p>
             <p id={`counter${index}`}>{counter}</p> */}
 
-                <button
-                  onClick={() => { }}
-                  className="checkoutBoxButtons"
-                >Editar datos</button> <br></br><br></br>
+                  <button
+                    onClick={() => { showEditProductForm(e.id) }}
+                    className="checkoutBoxButtons"
+                  >Editar datos</button> <br></br><br></br>
+
+                  <button
+                    onClick={() => { deleteProduct(e.id) }}
+                    className="checkoutBoxButtons"
+                  >Eliminar producto</button>
+
+                </div></>}
+
+              {editProduct[e.id] ? <><input
+                // data-testid="emailInput"
+                type="text"
+                placeholder="Nombre"
+                defaultValue={e['name']}
+                onChange={(e) => setName(e.target.value)}
+              ></input><br></br>
+
+                {/* {error && <p
+          id="textoCorreoInvalido"
+          className="textoCorreoInvalido"
+          style={{ visibility: error ? 'visible' : 'hidden' }}
+        >{errorText}<br></br><br></br></p>} */}
+
+                <input
+                  // data-testid="passwordInput"
+                  type="text"
+                  placeholder="Precio"
+                  defaultValue={e['price']}
+                  onChange={(e) => setPrice(e.target.value)}
+                ></input><br></br>
+
+                <input
+                  // data-testid="passwordInput"
+                  type="text"
+                  placeholder="Link de imagen"
+                  defaultValue={e['image']}
+                  onChange={(e) => setImage(e.target.value)}
+                ></input><br></br>
+
+                <select data-testid="select" defaultValue="" onChange={(e) => setType(e.target.value)}>
+                  <option value="">Selecciona una posición</option>
+                  <option data-testid="select-option" value="Desayuno">Desayuno</option>
+                  <option data-testid="select-option" value="Almuerzo ">Almuerzo</option>
+                </select ><br></br>
+
+                {error && <p
+                  id="textoCorreoInvalido"
+                  className="textoCorreoInvalido"
+                  style={{ visibility: error ? 'visible' : 'hidden' }}
+                >{errorText}<br></br><br></br></p>}
 
                 <button
-                  onClick={() => { deleteProduct(e.id) }}
+                  // data-testid="signInButton"
+                  onClick={() => { /* setName(e['name']); setPrice(e['price']); setImage(e['image']);  */acceptEditProduct(e) }}
                   className="checkoutBoxButtons"
-                >Eliminar producto</button>
+                >Aceptar</button><br></br>
 
-              </div>
+                <button
+                  // data-testid="signInButton"
+                  onClick={() => {/*  setError(true); setErrorText(); */ setAddProductForm(false); setAddProductBox(true) }}
+                  className="checkoutBoxButtons"
+                >Cancelar</button></> : null}
             </section>
           )
         })}
