@@ -40,6 +40,12 @@ function OfficeProducts() {
   }, [navigate, setResults]);
   // console.log("results", results)
 
+  async function deleteProduct(id) {
+    /* const result =  */await database(`products/${id}`, 'DELETE', localStorage.getItem("accessToken"))
+    // console.log(result)
+    reloadDatabase()
+  }
+
   const body = { // body will be used by postOrder
     "name": name,
     "price": price,
@@ -103,9 +109,9 @@ function OfficeProducts() {
                 >Editar datos</button> <br></br><br></br>
 
                 <button
-                  onClick={() => { }}
+                  onClick={() => { deleteProduct(e.id) }}
                   className="checkoutBoxButtons"
-                >Eliminar datos</button>
+                >Eliminar producto</button>
 
               </div>
             </section>
