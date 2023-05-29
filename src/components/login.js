@@ -43,27 +43,27 @@ function Login() {
   return (
     <main className="PantallaInicio">
       <section className="cajaInicio">
-        <img src={require('./img/img_libro_rojo.png')} alt="Imagen de libro"></img>
+        <img src={require('./img/img_libro_rojo.png')} alt="Imagen de libro"></img> <br></br>
 
         <input
           // data-testid="emailInput"
           type="text"
           placeholder="E-mail"
           onChange={(e) => setEmail(e.target.value)}
-        ></input>
+        ></input> <br></br>
 
         {error && <p
           id="textoCorreoInvalido"
           className="textoCorreoInvalido"
           style={{ visibility: error ? 'visible' : 'hidden' }}
-        >{errorText}</p>}
+        >{errorText}<br></br></p>}
 
         <input
           // data-testid="passwordInput"
           type="password"
           placeholder="Contraseña"
           onChange={(e) => setPassword(e.target.value)}
-        ></input>
+        ></input><br></br>
 
         <button
           // data-testid="signInButton"

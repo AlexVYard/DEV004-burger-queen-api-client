@@ -53,7 +53,7 @@ function Workers() {
     if (body["role"] === "") {
       setErrorPosition(true)
       setErrorPositionText('Selecciona una posición')
-      return 
+      return
     } else {
       setErrorPosition(false)
     }
@@ -66,7 +66,7 @@ function Workers() {
       setError(true)
       setErrorText(result)
       // this.setState({ text: 'result' });
-    }     
+    }
     // console.log(result)    
     reloadDatabase()
   }
@@ -97,16 +97,16 @@ function Workers() {
   return (
     <>
       {results && results.map((e, index) => { // renders products
-      const roleValue = () => {
-        if (e['role'] === 'waiter') return 'Mesero'
-        if (e['role'] === 'chef') return 'Cocinero'
-        if (e['role'] === 'admin') return 'Administrador'
-      }
-      /* const selectedRole = () => {
-        if (e['role'] === 'waiter') {return true }
-        if (e['role'] === 'chef') return true
-        if (e['role'] === 'admin') return true
-      } */
+        const roleValue = () => {
+          if (e['role'] === 'waiter') return 'Mesero'
+          if (e['role'] === 'chef') return 'Cocinero'
+          if (e['role'] === 'admin') return 'Administrador'
+        }
+        /* const selectedRole = () => {
+          if (e['role'] === 'waiter') {return true }
+          if (e['role'] === 'chef') return true
+          if (e['role'] === 'admin') return true
+        } */
         return (
           // results && results.map((e, index) => (
           <section className="officeBox" key={e.id}>

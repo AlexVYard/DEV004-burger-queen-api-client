@@ -24,12 +24,12 @@ function App() {
         <Routes>
           <Route element={<PrivateRoutes />}>
             <Route element={<Menu />} path="/menu" exact />
-            <Route element={<Menu />} path="/" exact />
             <Route element={<Kitchen />} path="/kitchen" exact />
             <Route element={<Office />} path="/office" exact />
             <Route element={<OfficeProducts />} path="/officeProducts" exact />
           </Route>
-          <Route element={<Login />} path="/login" />          
+          <Route element={<Login />} path="/login" />  
+          <Route element={<Login />} path="/" />        
         </Routes>
       </>
   )
