@@ -12,7 +12,7 @@ function Header() {
   return (
     <main className="header">
 
-      <Link to="/office">Office</Link>
+      <Link to="/officeWorkers">Office</Link>
       <Link to="/officeProducts">Products</Link>
 
     </main>

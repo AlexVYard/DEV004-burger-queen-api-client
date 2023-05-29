@@ -8,13 +8,19 @@ function OfficeProducts() {
 
   const [addProductBox, setAddProductBox] = useState(true)
   const [addProductForm, setAddProductForm] = useState(false)
+  const [name, setName] = useState('')
+  const [price, setPrice] = useState('')
+  const [image, setImage] = useState('')
+  const [type, setType] = useState('')
+  const [error, setError] = useState(false)
+  const [errorText, setErrorText] = useState('Error')
 
   let [results, setResults] = useState()
 
   const navigate = useNavigate();
 
   async function reloadDatabase() {
-    results = await database('users', 'GET', localStorage.getItem("accessToken"))
+    results = await database('products', 'GET', localStorage.getItem("accessToken"))
     setResults(results)
   }
 
@@ -34,7 +40,19 @@ function OfficeProducts() {
   }, [navigate, setResults]);
   // console.log("results", results)
 
+  const body = { // body will be used by postOrder
+    "name": name,
+    "price": price,
+    "image": image,
+    "type": type,
+  }
+
   async function addProduct() {
+    if (name===""||price===""||image===""||type==="") {
+      setError(true)
+      setErrorText("Por favor rellene todos los campos")
+      return
+    }
     /* if (body["role"] === "") {
       setErrorPosition(true)
       setErrorPositionText('Selecciona una posición')
@@ -42,7 +60,9 @@ function OfficeProducts() {
     } else {
       setErrorPosition(false)
     } */
-    /* const result = await database('users', 'POST', localStorage.getItem("accessToken"), body) */
+    await database('products', 'POST', localStorage.getItem("accessToken"), body)
+    setAddProductForm(false)
+    setAddProductBox(true)
     /* if (typeof result === 'object') {
       // navigate('/menu')
       setAddUserForm(false)
@@ -61,12 +81,18 @@ function OfficeProducts() {
       <Header />
       <main className="officeScreen">
         {results && results.map((e, index) => { // renders products
+        /* const typeValue = () => {
+          if (e['type'] === 'Desayuno') return 'Mesero'
+          if (e['type'] === 'Almuerzo') return 'Cocinero'
+        } */
           return (
             // results && results.map((e, index) => (
             <section className="cajaInicio">
+              <p id="textoCorreoInvalido" className="textoCorreoInvalido">Imagen:</p>
               <img src={e['image']} alt={e['name']}></img><br></br>
-              <p id="textoCorreoInvalido" className="textoCorreoInvalido">{e['name']}</p><br></br>
+              <p id="textoCorreoInvalido" className="textoCorreoInvalido">Nombre: {e['name']}</p><br></br>
               <p id="textoCorreoInvalido" className="textoCorreoInvalido">Precio: {e['price']}</p><br></br>
+              <p id="textoCorreoInvalido" className="textoCorreoInvalido">Tipo: {e['type']}</p><br></br>
               <div className="amountBox">
                 {/* <p id={index} onClick={() => { setCounter(counter - 1); console.log(index) }}>{'<'}</p>
             <p id={`counter${index}`}>{counter}</p> */}
@@ -110,12 +136,12 @@ function OfficeProducts() {
           </div>
         </section>}
         {addProductForm && <section className="cartBox">
-          {/* <input
-          // data-testid="emailInput"
-          type="text"
-          placeholder="E-mail"
-          onChange={(e) => setEmail(e.target.value)}
-        ></input><br></br> */}
+          <input
+            // data-testid="emailInput"
+            type="text"
+            placeholder="Nombre"
+            onChange={(e) => setName(e.target.value)}
+          ></input><br></br>
 
           {/* {error && <p
           id="textoCorreoInvalido"
@@ -123,32 +149,31 @@ function OfficeProducts() {
           style={{ visibility: error ? 'visible' : 'hidden' }}
         >{errorText}<br></br><br></br></p>} */}
 
-          {/* <input
-          // data-testid="passwordInput"
-          type="password"
-          placeholder="Contraseña"
-          onChange={(e) => setPassword(e.target.value)}
-        ></input><br></br> */}
+          <input
+            // data-testid="passwordInput"
+            type="text"
+            placeholder="Precio"
+            onChange={(e) => setPrice(e.target.value)}
+          ></input><br></br>
 
-          {/* <input
-          // data-testid="passwordInput"
-          type="text"
-          placeholder="Rol"
-          onChange={(e) => setRole(e.target.value)}
-        ></input><br></br> */}
+          <input
+            // data-testid="passwordInput"
+            type="text"
+            placeholder="Link de imagen"
+            onChange={(e) => setImage(e.target.value)}
+          ></input><br></br>
 
-          {/* <select data-testid="select" defaultValue="" onChange={(e) => setRole(e.target.value)}>
-          <option value="">Selecciona una posición</option>
-          <option data-testid="select-option" value="waiter">Mesero</option>
-          <option data-testid="select-option" value="chef ">Cocinero</option>
-          <option data-testid="select-option" value="admin">Administrador</option>
-        </select ><br></br> */}
+          <select data-testid="select" defaultValue="" onChange={(e) => setType(e.target.value)}>
+            <option value="">Selecciona una posición</option>
+            <option data-testid="select-option" value="Desayuno">Desayuno</option>
+            <option data-testid="select-option" value="Almuerzo ">Almuerzo</option>
+          </select ><br></br>
 
-          {/* {errorPosition && <p
-          id="textoCorreoInvalido"
-          className="textoCorreoInvalido"
-          style={{ visibility: errorPosition ? 'visible' : 'hidden' }}
-        >{errorPositionText}<br></br><br></br></p>} */}
+          {error && <p
+            id="textoCorreoInvalido"
+            className="textoCorreoInvalido"
+            style={{ visibility: error ? 'visible' : 'hidden' }}
+          >{errorText}<br></br><br></br></p>}
 
           <button
             // data-testid="signInButton"

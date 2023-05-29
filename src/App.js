@@ -25,7 +25,7 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route element={<Menu />} path="/menu" exact />
             <Route element={<Kitchen />} path="/kitchen" exact />
-            <Route element={<Office />} path="/office" exact />
+            <Route element={<Office />} path="/officeWorkers" exact />
             <Route element={<OfficeProducts />} path="/officeProducts" exact />
           </Route>
           <Route element={<Login />} path="/login" />  

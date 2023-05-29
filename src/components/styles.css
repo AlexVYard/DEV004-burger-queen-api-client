@@ -92,6 +92,7 @@ button {
 
 .textoCorreoInvalido {
   color: #D80000;
+  text-align: center;
 }
 
 input {
