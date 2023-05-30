@@ -179,7 +179,7 @@ function OfficeProducts() {
                 <select data-testid="select" defaultValue="" onChange={(e) => setType(e.target.value)}>
                   <option value="">Selecciona una posición</option>
                   <option data-testid="select-option" value="Desayuno">Desayuno</option>
-                  <option data-testid="select-option" value="Almuerzo ">Almuerzo</option>
+                  <option data-testid="select-option" value="Almuerzo">Almuerzo</option>
                 </select ><br></br>
 
                 {error && <p

@@ -10,6 +10,7 @@ import { BrowserRouter/* , MemoryRouter *//* , Router */ } from "react-router-do
 import App from './App.js';
 import Kitchen from './components/kitchen.js';
 import Office from './components/office.js';
+import OfficeProducts from './components/officeProducts.js';
 // import { signIn } from './scripts/signIn';
 // import { postOrder } from './scripts/postOrder.js';
 // import { database } from './scripts/database.js';
@@ -153,7 +154,7 @@ describe('Kitchen Order', () => {
   })  
 })
 
-describe('Office', () => {
+describe('Office workers', () => {
   test('Add worker', async () => {
     render(<Office />, { wrapper: BrowserRouter })
 
@@ -229,5 +230,87 @@ describe('Office', () => {
     // console.log(deleteWorkerButtons2.length)
 
     expect(deleteWorkerButtons1.length > deleteWorkerButtons2.length).toBe(true)
+  })
+})
+
+describe('Office products', () => {
+  test('Add product', async () => {
+    render(<OfficeProducts />, { wrapper: BrowserRouter })
+
+    const addProductsButton1 = await screen.findByText(/Agregar productos/i)
+    fireEvent.click(addProductsButton1)
+
+    const nameInput = screen.getByPlaceholderText(/Nombre/i)
+    const priceInput = screen.getByPlaceholderText(/Precio/i)
+    const imageInput = screen.getByPlaceholderText(/Link de imagen/i)
+    const typeInput = screen.getByTestId('select')
+    
+    fireEvent.change(nameInput, { target: { value: 'Hello' } })
+    fireEvent.change(priceInput, { target: { value: '42' } })
+    fireEvent.change(imageInput, { target: { value: 'transrights.jpg' } })
+    fireEvent.change(typeInput, { target: { value: 'Desayuno' } })
+
+    let options = screen.getAllByTestId('select-option')
+    expect(options[0].selected).toBeTruthy();
+    expect(options[1].selected).toBeFalsy();
+    // expect(options[2].selected).toBeTruthy();
+
+    const createProductButton = await screen.findByText(/Crear producto/i)
+    fireEvent.click(createProductButton)
+    
+    await expect(async () => {
+      await screen.findByText(/Nombre: Hello/i).toBeInTheDocument()
+    }).rejects.toEqual(expect.anything());
+
+    expect(await screen.findByText("Nombre: Hello")).toBeInTheDocument()
+  })
+
+  test('Edit product', async () => {
+    render(<OfficeProducts />, { wrapper: BrowserRouter })
+
+    const editProdutButtons = await screen.findAllByText(/Editar datos/i)
+    fireEvent.click(editProdutButtons[editProdutButtons.length - 1])
+
+    const nameInput = screen.getByPlaceholderText(/Nombre/i)
+    const priceInput = screen.getByPlaceholderText(/Precio/i)
+    const imageInput = screen.getByPlaceholderText(/Link de imagen/i)
+    const typeInput = screen.getByTestId('select')
+    
+    fireEvent.change(nameInput, { target: { value: 'Goodbye' } })
+    fireEvent.change(priceInput, { target: { value: '24' } })
+    fireEvent.change(imageInput, { target: { value: 'legalabortion.jpg' } })
+    fireEvent.change(typeInput, { target: { value: 'Almuerzo' } })
+
+    let options = screen.getAllByTestId('select-option')
+    expect(options[0].selected).toBeFalsy();
+    expect(options[1].selected).toBeTruthy();
+
+    const acceptEditButton = await screen.findByText(/Aceptar/i)
+    fireEvent.click(acceptEditButton)
+    
+    await expect(async () => {
+      await screen.findByText("Nombre: Goodbye").toBeInTheDocument()
+    }).rejects.toEqual(expect.anything());
+
+    expect(await screen.findByText("Nombre: Goodbye")).toBeInTheDocument()
+  })
+
+  test('Delete product', async () => {
+    render(<OfficeProducts />, { wrapper: BrowserRouter })
+
+    const deleteProductButtons1 = await screen.findAllByText(/Eliminar producto/i)
+    fireEvent.click(deleteProductButtons1[deleteProductButtons1.length - 1])
+    // console.log(deleteWorkerButtons1.length)
+
+    await expect(async () => {
+      await waitFor(
+        () => expect(deleteProductButtons1.length).toBe(deleteProductButtons1.length - 1)
+      );
+    }).rejects.toEqual(expect.anything());
+
+    const deleteProductButtons2 = await screen.findAllByText(/Eliminar producto/i)
+    // console.log(deleteWorkerButtons2.length)
+
+    expect(deleteProductButtons1.length > deleteProductButtons2.length).toBe(true)
   })
 })
