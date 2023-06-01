@@ -6,11 +6,14 @@
   box-sizing: border-box;
 }
 
-body, #root {
+body,
+#root {
   height: 100vh;
 }
 
-.PantallaInicio, .kitchenScreen, .officeScreen {
+.PantallaInicio,
+.kitchenScreen,
+.officeScreen {
   height: 100%;
   font-family: 'Verdana', sans-serif;
   background-size: cover;
@@ -22,7 +25,8 @@ body, #root {
   align-items: center;
 }
 
-.kitchenScreen, .officeScreen  {
+.kitchenScreen,
+.officeScreen {
   background-image: url("./img/img_kitchenScreen.jpg");
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -38,10 +42,12 @@ body, #root {
   background-image: url("./img/img_officeScreen.jpg");
 }
 
-.cajaInicio, .cartBox, .officeBox {
+.cajaInicio,
+.cartBox,
+.officeBox {
   padding: 20px 50px;
   width: auto;
-  display: grid;  
+  display: grid;
   margin: 0px auto;
   align-items: center;
   justify-items: center;
@@ -86,7 +92,8 @@ button {
   text-decoration: none;
 }
 
-.textoCrearCuenta, .textoCorreoInvalido {
+.textoCrearCuenta,
+.textoCorreoInvalido {
   font-size: 10px;
 }
 
@@ -105,8 +112,8 @@ input {
 }
 
 .header {
-display: flex;
-list-style: none;
-gap: 1rem;
-padding: 5px 1rem
+  display: flex;
+  list-style: none;
+  gap: 1rem;
+  padding: 5px 1rem
 }

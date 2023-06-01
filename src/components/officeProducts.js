@@ -154,12 +154,6 @@ function OfficeProducts() {
                 onChange={(e) => setName(e.target.value)}
               ></input><br></br>
 
-                {/* {error && <p
-          id="textoCorreoInvalido"
-          className="textoCorreoInvalido"
-          style={{ visibility: error ? 'visible' : 'hidden' }}
-        >{errorText}<br></br><br></br></p>} */}
-
                 <input
                   // data-testid="passwordInput"
                   type="text"
@@ -196,7 +190,7 @@ function OfficeProducts() {
 
                 <button
                   // data-testid="signInButton"
-                  onClick={() => {/*  setError(true); setErrorText(); */ setAddProductForm(false); setAddProductBox(true) }}
+                  onClick={() => {/*  setError(true); setErrorText(); */ showEditProductForm(e.id) }}
                   className="checkoutBoxButtons"
                 >Cancelar</button></> : null}
             </section>

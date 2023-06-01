@@ -51,9 +51,9 @@ function Cart({ cart, addToCart, results, setResults }/* { menuToProducts } */) 
       // setSuccessfulOrderText('Enviado a Cocina')
       setTimeout(async () => {
         // navigate('/menu')
-
-        results = await database('users', 'GET', localStorage.getItem("accessToken"))
-        setResults(results)
+        window.location.reload();
+        // results = await database('products', 'GET', localStorage.getItem("accessToken"))
+        // setResults(results)
 
       }, "3000");
       // alert('Enviado a la cocina')
