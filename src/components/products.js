@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { /* useState,  */useEffect } from 'react'
 import { /* Navigate,  */useNavigate } from "react-router-dom"
 import './styles.css';
 // import { signIn } from '../scripts/signIn';
@@ -6,7 +6,7 @@ import { database } from '../scripts/database';
 // import { getElementError } from '@testing-library/react'
 // import ReactDOM from "react-dom"
 
-function Products({ cart, addToCart, results, setResults }) {
+function Products({ filter, cart, addToCart, results, setResults }) {
 
   // const [results, setResults] = useState()
   // const [cart, addToCart] = useState([]);
@@ -16,7 +16,8 @@ function Products({ cart, addToCart, results, setResults }) {
   useEffect(() => {  // getting info from database
     // fetch data
     const resultsFetch = async () => {
-      const results = await database('products', 'GET', localStorage.getItem("accessToken"))
+      let results = await database('products', 'GET', localStorage.getItem("accessToken"))
+      results = results.filter(value=>value.type.includes(filter))
       setResults(results);
       if (results === 'jwt expired') {
         localStorage.setItem("accessToken", results['accessToken'])
@@ -26,7 +27,7 @@ function Products({ cart, addToCart, results, setResults }) {
     }
     resultsFetch()
     // console.log("results", results)
-  }, [navigate, setResults]);
+  }, [navigate, filter, setResults]);
   // console.log("results", results)
 
   function addToCartButton(e, index) {
@@ -44,7 +45,7 @@ function Products({ cart, addToCart, results, setResults }) {
       // console.log(cart[i]['product']['id'])
       // console.log(e['id'])
       if (cart[i]['product']['id'] === e['id']) {
-        
+
         // console.log("cart[i]", cart[i])
         let cartTemp = cart[i]
         // console.log("cartTemp", cartTemp)
@@ -65,18 +66,21 @@ function Products({ cart, addToCart, results, setResults }) {
     /* } else {
       addToCart([...cart, cartbody])
     } */
-   //  console.log(cart)
+    //  console.log(cart)
   }
 
   return (
     <>
       {results && results.map((e, index) => { // renders products
+
+        
+
         return (
           // results && results.map((e, index) => (
           <section className="cajaInicio">
-            <img src={e['image']} alt={e['name']}></img>
-            <p id="textoCorreoInvalido" className="textoCorreoInvalido">{e['name']}</p>
-            <p id="textoCorreoInvalido" className="textoCorreoInvalido">Precio: {e['price']}</p>
+            <img src={e['image']} alt={e['name']}></img><br></br>
+            <p id="textoCorreoInvalido" className="textoCorreoInvalido">{e['name']}</p><br></br>
+            <p id="textoCorreoInvalido" className="textoCorreoInvalido">Precio: {e['price']}</p><br></br>
             <div className="amountBox">
               {/* <p id={index} onClick={() => { setCounter(counter - 1); console.log(index) }}>{'<'}</p>
             <p id={`counter${index}`}>{counter}</p> */}
