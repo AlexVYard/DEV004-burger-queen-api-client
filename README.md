@@ -3,7 +3,7 @@
 ## Índice
 
 * [1. Resumen del proyecto](#1-resumen-del-proyecto)
-* [2. Objetivos de aprendizaje](#2-objetivos-de-aprendizaje)
+* [2. Herramientas usadas](#2-herramientas-usadas)
 * [3. Caracteristicas generales](#3-caracteristicas-generales)
 * [4. Funcionalidad](#4-funcionalidad)
 * [5. Despliegue](#5-despliegue)
@@ -11,13 +11,13 @@
 
 ***
 
-## 2. Resumen del proyecto
+## 1. Resumen del proyecto
 
 App para uso en restaurante, cuenta con vistas de uso para los meseros, cocineros y administradores.
 
 ***
 
-## 3. Herramientas usadas
+## 2. Herramientas usadas
 
 ### HTML
 
@@ -31,7 +31,7 @@ App para uso en restaurante, cuenta con vistas de uso para los meseros, cocinero
 
 ***
 
-## 4. Caracteristicas generales
+## 3. Caracteristicas generales
 
 * Se a usado React como framework.
 * El proyecto usa un API Mock para la base de datos.
@@ -40,7 +40,7 @@ App para uso en restaurante, cuenta con vistas de uso para los meseros, cocinero
 
 ***
 
-## 5. Criterios de aceptación del proyecto
+## 4. Funcionalidad
 
 El producto cuenta con 4 vistas una para cada cargo (mesero, cocinero y administrador) y otra para hacer "login", cada vista cuenta con su funcionalidad respectiva.
 
@@ -83,7 +83,7 @@ El producto cuenta con 4 vistas una para cada cargo (mesero, cocinero y administ
 
 ***
 
-## 6. Despliegue
+## 5. Despliegue
 
 El proyecto desplegado y su mock respectivo se puede encontrar en los siguientes links:
 
@@ -92,25 +92,18 @@ El proyecto desplegado y su mock respectivo se puede encontrar en los siguientes
 
 ***
 
-## 7. Pistas / Tips
-
-### Frameworks / libraries
+## 6. Recursos
 
 * [Routeing](https://www.youtube.com/watch?v=Ul3y1LXxzdU)
 * [Navigate](https://stackoverflow.com/questions/64838587/how-to-properly-use-usehistory-from-react-router-dom)
-
-### Herramientas
-
 * [Style editing with onClick](https://bobbyhadz.com/blog/react-change-style-on-click)
 * [Protected routes](https://www.youtube.com/watch?v=2k8NleFjG7I)
 * [Solution to testing in React](https://testing-library.com/docs/react-testing-library/intro/#the-problem)
 * [Current date](https://stackoverflow.com/questions/43744312/react-js-get-current-date)
 * [Data fetch](https://www.developerway.com/posts/how-to-fetch-data-in-react)
 * [Loops](https://www.pluralsight.com/guides/how-to-implement-a-component-%22loop%22-with-react)
-
-### PWA
-
 * [Spread operator (...)](https://fjolt.com/article/javascript-three-dots-spread-operator)
 * [Router testing](https://testing-library.com/docs/example-react-router/)
 * [waitFor](https://testing-library.com/docs/dom-testing-library/api-async/#waitfor)
-* []()
+* [Select option testing](https://stackoverflow.com/questions/57946870/how-to-select-an-option-from-a-select-list-with-react-testing-library)
+* [Clear input box](https://timmousk.com/blog/react-clear-input/#:~:text=The%20easiest%20way%20to%20clear%20an%20uncontrolled%20input%20is%20to,current.)
