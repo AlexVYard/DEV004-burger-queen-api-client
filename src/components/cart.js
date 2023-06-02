@@ -9,14 +9,12 @@ import { database } from '../scripts/database';
 function Cart({ cart, addToCart, results, setResults }/* { menuToProducts } */) {
 
   const [client, setClient] = useState('')
-  // const [clientText, setClientText] = useState('')
-  // const [results, setResults] = useState()
-  // const [cart, addToCart] = useState([])
+  // const onInput = (e) => setClient(e.target.value);
   const [errorClient, setErrorClient] = useState(false)
   // const [errorTextClient, setErrorTextClient] = useState("Error");
   const [errorCart, setErrorCart] = useState(false)
   // const [errorTextCart, setErrorTextCart] = useState("Error");
-  const [successfulOrder, setSuccessfulOrder] = useState(false);
+  const [successfulOrder, setSuccessfulOrder] = useState(false)
   // const [successfulOrderText, setSuccessfulOrderText] = useState("Error");
   /* let error = false
   let errorText = 'Error' */
@@ -33,16 +31,19 @@ function Cart({ cart, addToCart, results, setResults }/* { menuToProducts } */) 
   }
 
   function postOrder() {
+    
     if (client === '') {
       setErrorClient(true)
-      // setErrorTextClient('Ingresa un nombre para el cliente')
-      // alert('Ingresa un nombre para el cliente')
+    } else {
+      setErrorClient(false)
     }
+
     if (cart.length === 0) {
       setErrorCart(true)
-      // setErrorTextCart('Añade productos al carrito antes de continuar')
-      // alert('Añade productos al carrito antes de continuar')
+    } else {
+      setErrorCart(false)
     }
+
     if (client.length > 0 && cart.length > 0) {
       database('orders', 'POST', localStorage.getItem("accessToken"), body)
       setErrorClient(false)
@@ -51,9 +52,13 @@ function Cart({ cart, addToCart, results, setResults }/* { menuToProducts } */) 
       // setSuccessfulOrderText('Enviado a Cocina')
       setTimeout(async () => {
         // navigate('/menu')
-        window.location.reload();
-        // results = await database('products', 'GET', localStorage.getItem("accessToken"))
-        // setResults(results)
+        // window.location.reload();
+        // results = results.filter(value=>value.type.includes(filter))
+        setClient("")
+        setSuccessfulOrder(false)        
+        addToCart([])
+        results = await database('products', 'GET', localStorage.getItem("accessToken"))
+        setResults(results)
 
       }, "3000");
       // alert('Enviado a la cocina')
@@ -65,14 +70,16 @@ function Cart({ cart, addToCart, results, setResults }/* { menuToProducts } */) 
       <section className="cartBox">  {/* checkout cart box */}
         <div className="cart-list">
 
-          <h1>Cliente:</h1> {/* getting client name */}
+          <h1>Cliente:</h1>
           <input
+            value={client}
             type="text"
             placeholder="Nombre"
             className="inputBox"
             onChange={(e) => setClient(e.target.value)}
-          >{/* {clientText} */}</input>
+          ></input>
           <br></br><br></br>
+          
 
           {errorClient && <p
             id="textoCorreoInvalido"

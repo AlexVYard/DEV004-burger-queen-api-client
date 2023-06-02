@@ -17,13 +17,13 @@ function Products({ filter, cart, addToCart, results, setResults }) {
     // fetch data
     const resultsFetch = async () => {
       let results = await database('products', 'GET', localStorage.getItem("accessToken"))
-      results = results.filter(value=>value.type.includes(filter))
-      setResults(results);
       if (results === 'jwt expired') {
         localStorage.setItem("accessToken", results['accessToken'])
         localStorage.setItem("user-info", JSON.stringify(results))
         navigate('/login')
       }
+      results = results.filter(value=>value.type.includes(filter))
+      setResults(results);
     }
     resultsFetch()
     // console.log("results", results)

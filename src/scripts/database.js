@@ -1,5 +1,5 @@
 export async function database(route, method, accessToken, body) {
-  let result = await fetch(`http://localhost:8080/${route}`, { 
+  let result = await fetch(`https://burger-queen-api-mock-alexa.glitch.me/${route}`, { 
     method: method,
     headers: {
       "content-type": "application/json",

@@ -22,7 +22,7 @@ function Menu() {
       <div className="header">
         <li onClick={() => {setFilter('')}}>Todo</li>
         <li onClick={() => {setFilter('Desayuno')}}>Desayuno</li>
-        <li onClick={() => {setFilter('Almuerzo')}}>Almuerzo</li>
+        <li onClick={() => {setFilter('Almuerzo')}}>Almuerzo y cena</li>
       </div>
 
       <main className="PantallaInicio">
